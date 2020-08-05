@@ -1,7 +1,12 @@
-'use strict';
+"use strict";
 
-const unleash = require('unleash-server');
+const unleash = require("unleash-server");
 
-let options = {};
+const enableGoogleOauth = require("./google-auth-hook");
+
+let options = {
+  adminAuthentication: "custom",
+  preRouterHook: enableGoogleOauth,
+};
 
 unleash.start(options);

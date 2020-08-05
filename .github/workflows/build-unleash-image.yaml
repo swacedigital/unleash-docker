@@ -1,0 +1,28 @@
+name: Build unleash image
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - index.js
+jobs:
+  build-unleash:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Login to docker registry
+        run: docker login docker.pkg.github.com -u $DEPLOY_USER_NAME -p $DEPLOY_USER_PASSWORD
+        env:
+          DEPLOY_USER_NAME: ${{ secrets.DEPLOY_USER_NAME }}
+          DEPLOY_USER_PASSWORD: ${{ secrets.DEPLOY_USER_PASSWORD }}
+
+      - name: Build image
+        run: docker build . -t $REPOSITORY_URI:$(echo $GITHUB_SHA | head -c7)
+        env:
+          REPOSITORY_URI: docker.pkg.github.com/swacedigital/unleash-docker/unleash
+
+      - name: Push to github packages
+        run: docker push $REPOSITORY_URI
+        env:
+          REPOSITORY_URI: docker.pkg.github.com/swacedigital/unleash-docker/unleash
