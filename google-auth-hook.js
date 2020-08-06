@@ -23,8 +23,7 @@ const passport = require("@passport-next/passport");
 const GoogleOAuth2Strategy = require("@passport-next/passport-google-oauth2")
   .Strategy;
 
-// const  { User, AuthenticationRequired } = require('unleash-server');
-const { User, AuthenticationRequired } = require("../lib/server-impl.js");
+const { User, AuthenticationRequired } = require("unleash-server");
 
 passport.use(
   new GoogleOAuth2Strategy(
