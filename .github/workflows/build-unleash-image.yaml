@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - master
-    paths:
-      - index.js
 jobs:
   build-unleash:
     runs-on: ubuntu-latest
